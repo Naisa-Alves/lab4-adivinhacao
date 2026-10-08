@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adivinhação</title>
+    <style>
+            body {
+            background-color: #f0f4f8;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        input {
+            padding: 8px;
+            font-size: 16px;
+            width: 80px;
+            text-align: center;
+            margin-right: 8px;
+        }
+
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        #mensagem {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="card-jogo" class="card">
+        <h2>Jogo de Adivinhação</h2>
+        <p>Adivinhe o número entre 0 e 99:</p>
+
+        <input type="number" id="chute" min="0" max="99">
+        <button onclick="verificarAdivinhacao()">Tentar</button>
+
+        <p id="mensagem"></p>
+    </div>
+
+    <script>
+        const numeroSorteado = Math.floor(Math.random() * 100);
+
+        function verificarAdivinhacao() {
+            const inputChute = document.getElementById("chute");
+            const mensagem = document.getElementById("mensagem");
+            const valorDigitado = parseInt(inputChute.value);
+
+            if (isNaN(valorDigitado)) {
+                mensagem.innerText = "Por favor, digite um número válido!";
+                return;
+            }
+
+            if (valorDigitado === numeroSorteado) {
+                mensagem.innerText = "Parabéns! Você acertou!";
+                document.getElementById("card-jogo").style.setProperty("background-color", "lightgreen");
+            } else {
+                document.getElementById("card-jogo").style.setProperty("background-color", "red");
+
+                if (valorDigitado > numeroSorteado) {
+                    mensagem.innerText = "Errou! O número sorteado é MENOR.";
+                } else {
+                    mensagem.innerText = "Errou! O número sorteado é MAIOR.";
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
