@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adivinhação</title>
     <style>
+        /* CSS ultra simples conforme o slide */
         body {
-            background-color: #c4d6b0;
-            font-family: Arial, sans-serif;
+            background-color: #b0b0b0; /* Cor de fundo acinzentada/esverdeada */
+            font-family: Times, "Times New Roman", serif; /* Fonte clássica igual à da foto */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -17,85 +18,72 @@
             color: #555;
         }
 
-        .input-box {
+        .caixa-input {
             background-color: #d8f5a2;
-            padding: 15px;
-            border-radius: 4px;
+            padding: 10px 20px;
             text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
 
         input {
-            width: 60px;
-            padding: 5px;
-            font-size: 18px;
+            width: 50px;
+            font-size: 16px;
             text-align: center;
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
+            border: 1px solid #777;
+            margin-bottom: 8px;
+            color: #449944;
         }
 
         button {
-            background-color: transparent;
+            background: none;
             border: none;
-            color: #555;
+            color: #777;
             font-size: 16px;
             cursor: pointer;
+            padding: 0;
         }
 
         #resultado {
             background-color: #d8f5a2;
-            font-size: 28px;
-            font-weight: bold;
-            padding: 10px 20px;
-            margin-bottom: 30px;
-            min-width: 200px;
-            text-align: center;
-        }
-
-        .secao-tentativas {
-            text-align: center;
+            font-size: 32px;
+            color: #ffffff;
+            padding: 5px 15px;
             margin-bottom: 25px;
+            text-align: center;
         }
 
-        .secao-tentativas h3 {
-            font-weight: normal;
+        .rotulo {
+            color: #777;
             font-size: 18px;
             margin-bottom: 10px;
-            color: #666;
         }
 
-        .lista-numeros {
+        .caixa-tentativas {
             background-color: #d8f5a2;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 8px 15px;
-            display: inline-block;
-            min-width: 150px;
+            font-size: 28px;
+            color: #c0b060;
+            padding: 5px 15px;
+            margin-bottom: 25px;
+            min-width: 120px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="input-box">
+    <div class="caixa-input">
         <input type="number" id="chute" min="0" max="99">
+        <br>
         <button onclick="verificarAdivinhacao()">Clique aqui</button>
     </div>
 
     <div id="resultado"></div>
 
-    <div class="secao-tentativas">
-        <h3>Tentativas pequenas:</h3>
-        <div id="pequenas" class="lista-numeros"></div>
-    </div>
+    <div class="rotulo">Tentativas pequenas:</div>
+    <div id="pequenas" class="caixa-tentativas"></div>
 
-    <div class="secao-tentativas">
-        <h3>Tentativas grandes:</h3>
-        <div id="grandes" class="lista-numeros"></div>
-    </div>
+    <div class="rotulo">Tentativas grandes:</div>
+    <div id="grandes" class="caixa-tentativas"></div>
 
     <script>
         const numeroSorteado = Math.floor(Math.random() * 100);
@@ -114,12 +102,12 @@
                 resultado.style.backgroundColor = "#d8f5a2";
             } else if (valor < numeroSorteado) {
                 resultado.innerText = "número menor";
-                resultado.style.backgroundColor = "#ff9999"; // Fundo vermelho ao errar
+                resultado.style.backgroundColor = "#red"; // Ou a cor que preferir ao errar
                 tentativasPequenas.push(valor);
                 document.getElementById("pequenas").innerText = tentativasPequenas.join(",");
             } else {
                 resultado.innerText = "número maior";
-                resultado.style.backgroundColor = "#ff9999"; // Fundo vermelho ao errar
+                resultado.style.backgroundColor = "#red";
                 tentativasGrandes.push(valor);
                 document.getElementById("grandes").innerText = tentativasGrandes.join(",");
             }
