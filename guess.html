@@ -5,85 +5,127 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adivinhação</title>
     <style>
-            body {
-            background-color: #f0f4f8;
+        body {
+            background-color: #c4d6b0;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: center;
             min-height: 100vh;
+            margin: 0;
+            color: #555;
         }
 
-        .card {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
+        .input-box {
+            background-color: #d8f5a2;
+            padding: 15px;
+            border-radius: 4px;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 90%;
+            margin-bottom: 25px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         input {
-            padding: 8px;
-            font-size: 16px;
-            width: 80px;
+            width: 60px;
+            padding: 5px;
+            font-size: 18px;
             text-align: center;
-            margin-right: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         button {
-            padding: 8px 16px;
+            background-color: transparent;
+            border: none;
+            color: #555;
             font-size: 16px;
             cursor: pointer;
         }
 
-        #mensagem {
-            margin-top: 15px;
+        #resultado {
+            background-color: #d8f5a2;
+            font-size: 28px;
             font-weight: bold;
+            padding: 10px 20px;
+            margin-bottom: 30px;
+            min-width: 200px;
+            text-align: center;
+        }
+
+        .secao-tentativas {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .secao-tentativas h3 {
+            font-weight: normal;
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+
+        .lista-numeros {
+            background-color: #d8f5a2;
+            font-size: 24px;
+            font-weight: bold;
+            padding: 8px 15px;
+            display: inline-block;
+            min-width: 150px;
         }
     </style>
 </head>
 <body>
 
-    <div id="card-jogo" class="card">
-        <h2>Jogo de Adivinhação</h2>
-        <p>Adivinhe o número entre 0 e 99:</p>
-
+    <div class="input-box">
         <input type="number" id="chute" min="0" max="99">
-        <button onclick="verificarAdivinhacao()">Tentar</button>
+        <button onclick="verificarAdivinhacao()">Clique aqui</button>
+    </div>
 
-        <p id="mensagem"></p>
+    <div id="resultado"></div>
+
+    <div class="secao-tentativas">
+        <h3>Tentativas pequenas:</h3>
+        <div id="pequenas" class="lista-numeros"></div>
+    </div>
+
+    <div class="secao-tentativas">
+        <h3>Tentativas grandes:</h3>
+        <div id="grandes" class="lista-numeros"></div>
     </div>
 
     <script>
         const numeroSorteado = Math.floor(Math.random() * 100);
+        const tentativasPequenas = [];
+        const tentativasGrandes = [];
 
         function verificarAdivinhacao() {
             const inputChute = document.getElementById("chute");
-            const mensagem = document.getElementById("mensagem");
-            const valorDigitado = parseInt(inputChute.value);
+            const resultado = document.getElementById("resultado");
+            const valor = parseInt(inputChute.value);
 
-            if (isNaN(valorDigitado)) {
-                mensagem.innerText = "Por favor, digite um número válido!";
-                return;
-            }
+            if (isNaN(valor)) return;
 
-            if (valorDigitado === numeroSorteado) {
-                mensagem.innerText = "Parabéns! Você acertou!";
-                document.getElementById("card-jogo").style.setProperty("background-color", "lightgreen");
+            if (valor === numeroSorteado) {
+                resultado.innerText = "número igual";
+                resultado.style.backgroundColor = "#d8f5a2";
+            } else if (valor < numeroSorteado) {
+                resultado.innerText = "número menor";
+                resultado.style.backgroundColor = "#ff9999"; // Fundo vermelho ao errar
+                tentativasPequenas.push(valor);
+                document.getElementById("pequenas").innerText = tentativasPequenas.join(",");
             } else {
-                document.getElementById("card-jogo").style.setProperty("background-color", "red");
-
-                if (valorDigitado > numeroSorteado) {
-                    mensagem.innerText = "Errou! O número sorteado é MENOR.";
-                } else {
-                    mensagem.innerText = "Errou! O número sorteado é MAIOR.";
-                }
+                resultado.innerText = "número maior";
+                resultado.style.backgroundColor = "#ff9999"; // Fundo vermelho ao errar
+                tentativasGrandes.push(valor);
+                document.getElementById("grandes").innerText = tentativasGrandes.join(",");
             }
+
+            inputChute.value = "";
+            inputChute.focus();
         }
     </script>
 
